@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	
+	<springProfile name="dev">
+		<logger name="org.springframework.web" level="TRACE" additivity="false" />
+	</springProfile>
+	
+	<springProfile name="local,uat,prod">
+		<springProperty scope="context" name="APP_NAME"
+			source="spring.application.name" defaultValue="defaultAppName" />
+		<springProperty scope="context" name="LOG_FILE" source="logging.file"
+			defaultValue="/var/log/tomcat8/${APP_NAME}" />
+		<logger name="org.springframework.web" level="INFO" additivity="false" >
+			<appender-ref ref="FILE" />
+		</logger>
+	</springProfile>
+	
+	<!-- imp for logging controlls from Admin UI -->
+	<jmxConfigurator />
+</configuration>
